@@ -1,0 +1,209 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Deploy & Launch [SIM]",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "${workspaceFolder}/.vscode/scripts/deploy.py",
+        "--lang",
+        "${config:ethoshelitraining.deploy.language}",
+        "--step",
+        "sensors"
+      ],
+      "options": {
+        "env": {
+          "ETHOS_FIRMWARE": "${config:ethos.firmware}"
+        }
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Deploy Radio",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "${workspaceFolder}/.vscode/scripts/deploy.py",
+        "--radio",
+        "--lang",
+        "${config:ethoshelitraining.deploy.language}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Deploy Radio [Fast]",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "${workspaceFolder}/.vscode/scripts/deploy.py",
+        "--fileext",
+        "fast",
+        "--radio",
+        "--lang",
+        "${config:ethoshelitraining.deploy.language}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Deploy Radio + Serial Debug",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "${workspaceFolder}/.vscode/scripts/deploy.py",
+        "--radio",
+        "--radio-debug",
+        "--lang",
+        "${config:ethoshelitraining.deploy.language}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Deploy Radio + Serial Debug [Fast]",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "${workspaceFolder}/.vscode/scripts/deploy.py",
+        "--fileext",
+        "fast",
+        "--radio",
+        "--radio-debug",
+        "--lang",
+        "${config:ethoshelitraining.deploy.language}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Radio: Serial Debug",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "${workspaceFolder}/.vscode/scripts/deploy.py",
+        "--radio",
+        "--connect-only",
+        "--lang",
+        "${config:ethoshelitraining.deploy.language}"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Clear locks",
+      "type": "process",
+      "command": "python3",
+      "args": [
+        "${workspaceFolder}/.vscode/scripts/deploy.py",
+        "--clear-lock"
+      ],
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "Set Deployment Language",
+      "type": "shell",
+      "command": "node",
+      "args": [
+        ".vscode/set-language.js",
+        "${input:deployLanguage}"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "ethos.Start",
+      "type": "process",
+      "command": "${command:ethos.start}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "ethos.SetFirmware",
+      "type": "process",
+      "command": "${command:ethos.setFirmware}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "ethos.SetRoot",
+      "type": "process",
+      "command": "${command:ethos.setRoot}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    },
+    {
+      "label": "ethos.StartChain",
+      "dependsOn": [
+        "ethos.SetFirmware",
+        "ethos.SetRoot",
+        "ethos.Start"
+      ],
+      "dependsOrder": "sequence"
+    },
+    {
+      "label": "ethos.OpenTelemetry",
+      "type": "process",
+      "command": "${command:ethos.openTelemetry}",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": true
+      }
+    }
+  ],
+  "inputs": [
+    {
+      "id": "deployLanguage",
+      "type": "pickString",
+      "description": "Select deployment language",
+      "options": [
+        "en"
+      ],
+      "default": "en"
+    }
+  ]
+}
